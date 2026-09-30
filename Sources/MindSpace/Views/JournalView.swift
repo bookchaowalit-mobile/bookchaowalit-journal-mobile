@@ -1,4 +1,5 @@
 import SwiftUI
+import MindSpaceCore
 
 struct JournalView: View {
     @EnvironmentObject var store: JournalStore
@@ -73,7 +74,7 @@ struct JournalView: View {
             }
             .navigationTitle("Journal")
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .primaryAction) {
                     Button {
                         showingAdd = true
                     } label: {
@@ -105,17 +106,15 @@ struct JournalView: View {
                     }
                     .navigationTitle("New Entry")
                     .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
+                        ToolbarItem(placement: .cancellationAction) {
                             Button("Cancel") {
                                 resetForm()
                                 showingAdd = false
                             }
                         }
-                        ToolbarItem(placement: .topBarTrailing) {
+                        ToolbarItem(placement: .confirmationAction) {
                             Button("Save") {
-                                let tags = newTags.split(separator: ",").map {
-                                    $0.trimmingCharacters(in: .whitespaces)
-                                }
+                                let tags = JournalStats.parseTags(newTags)
                                 store.addEntry(
                                     title: newTitle,
                                     content: newContent,
@@ -125,7 +124,10 @@ struct JournalView: View {
                                 resetForm()
                                 showingAdd = false
                             }
-                            .disabled(newTitle.isEmpty || newContent.isEmpty)
+                            .disabled(
+                                newTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+                                    newContent.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                            )
                         }
                     }
                 }
