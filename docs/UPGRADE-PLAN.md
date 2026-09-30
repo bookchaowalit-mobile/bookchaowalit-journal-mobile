@@ -17,7 +17,7 @@ Swift toolchain was available when this pass was made.
 - P2: Move persistence from `UserDefaults` to SwiftData or a JSON file (entries can grow large).
 - P2: Accessibility: VoiceOver labels for the mood picker emojis and timer ring.
 
-## Done in this pass
+## Done in this pass (pass 1)
 
 - Extracted `MindSpaceCore` (journal stats, tag parsing, meditation session
   state machine) with 9 XCTest cases.
@@ -31,3 +31,12 @@ Swift toolchain was available when this pass was made.
   on macOS (CI host).
 - CI: runs `swift build` + `swift test` (was a release build of a target that could not compile).
 - Added this README (the repo had none).
+
+## Done in this pass (pass 2)
+
+- Static compile review only (no Swift toolchain in this environment): read every
+  source and test file for type/API errors (access levels across modules, tuple
+  labels, closure destructuring, result-builder declarations, macOS 14/iOS 17
+  API availability, `@testable` usage). No compile errors found; nothing changed.
+  All files also parse cleanly with tree-sitter-swift.
+- The P0 item (confirm the macOS `swift build` / `swift test` CI job is green) stays open.
