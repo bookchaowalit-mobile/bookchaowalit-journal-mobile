@@ -1,4 +1,5 @@
 import SwiftUI
+import MindSpaceCore
 
 struct StatsView: View {
     @EnvironmentObject var store: JournalStore

@@ -1,4 +1,5 @@
 import SwiftUI
+import MindSpaceCore
 
 struct MeditationView: View {
     @EnvironmentObject var timer: MeditationTimer
@@ -52,8 +53,7 @@ struct MeditationView: View {
                         HStack(spacing: 8) {
                             ForEach(timer.availableDurations, id: \.self) { mins in
                                 Button {
-                                    timer.selectedDuration = mins
-                                    timer.secondsRemaining = mins * 60
+                                    timer.select(minutes: mins)
                                 } label: {
                                     Text("\(mins)m")
                                         .font(.subheadline.bold())
